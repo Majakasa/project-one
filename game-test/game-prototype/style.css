@@ -29,7 +29,7 @@
 
 .combatLog{
   width: 700px;
-  height: 50px;
+  height: 60px;
   text-align: center;
   border: 1px solid yellow;
   background-color: black;
@@ -55,7 +55,7 @@
   background-color: lightgreen;
 }
 
-.spell{
+.fireball{
   height: 100px;
   width: 170px;
   background-color: lightgreen;

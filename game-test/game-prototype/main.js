@@ -9,10 +9,11 @@ var setUp = function(){
 
 setUp();
 }
+
 enemyHp = document.querySelector('#enemyHp');
 playerHp = document.querySelector('#playerHp');
 combatLog = document.querySelector('.combatLog');
-spellButton = document.querySelector('.spell');
+spellButton = document.querySelector('.fireball');
 attackButton = document.querySelector('.attack');
 
 
@@ -22,6 +23,7 @@ var player = {
   Def: 12,
   Speed: 11,
   Mana: 70,
+  First: undefined,
 };
 var enemy = {
   Hp: 120,
@@ -29,12 +31,43 @@ var enemy = {
   Def: 15,
   Speed: 9,
   Mana: 50,
+  First: undefined,
 };
+
+var timer;
+function slowEnemyAttack() {
+  timer = window.setTimeout(enemyMove, 2000);
+}
+var slowPlayerAttack = function(){
+  timer = window.setTimeout(playerAtk, 2000);
+}
+var slowPlayerSpell = function(){
+  timer = window.setTimeout(playerFireball, 2000);
+}
+
+var prority = function(){
+  if(player.Speed > enemy.Speed){
+    player.First = true;
+    enemy.First = false;
+  }
+  else{
+    enemy.First = true;
+    player.First = false;
+  }
+}
+if(player.First){
+    slowEnemyAttack();
+}else{
+
+}
+
+
 var lastMove = undefined;
 var random = function(){
   return Math.floor(Math.random() * (6 - 1 + 1)) + 1;
 }
 var enemyMove = function(){
+
   random()
   if(lastMove === "enemyPrepare"){
     enemyHardHit();
@@ -63,60 +96,78 @@ var enemyMove = function(){
       combatLog.innerText = "Enemy is waiting"
       lastMove = "waiting"
     }
+  HpCheck();
 }
 
 var cleanUp = function(){
-  combatLog.innerText = ""
+  combatLog.innerText = " "
+}
+var HpCheck = function(){
+  if(player.Hp <= 0){
+    combatLog.innerText = "\n \n You have died..."
+    console.log("you died")
+  }
+  if(enemy.Hp <= 0){
+    combatLog.innerText = "\n \n You won!"
+  }
 }
 
 
 var enemyAtk = function(){
   player.Hp = player.Hp - (enemy.Atk - player.Def);
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText =  " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!"
+  combatLog.innerText = " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!"
+  console.log(lastMove);
 }
 var playerAtk = function(){
   enemy.Hp = enemy.Hp - (player.Atk - enemy.Def);
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText += " You Attack for " + (player.Atk - enemy.Def) + " damage!" + " "
-  console.log(lastMove);
+  combatLog.innerText += "\n You Attack for " + (player.Atk - enemy.Def) + " damage!"
+
 }
 var enemyDefUp = function(){
   enemy.Def = enemy.Def + 3;
   combatLog.innerText = "Enemy Def rose by 3!"
+  console.log(lastMove);
 }
 var enemyFireball = function(){
-  enemy.Mana = enemy.Mana - 5;
+  enemy.Mana = enemy.Mana - 15;
   player.Hp = player.Hp - enemy.Atk;
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!"
+  console.log(lastMove);
 }
 var playerFireball = function(){
-  player.Mana = player.Mana - 5;
+  player.Mana = player.Mana - 15;
   enemy.Hp = enemy.Hp - player.Atk;
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText = "player cast Fireball! " + player.Atk + " damage!"
+  combatLog.innerText = "\n Player cast Fireball! " + player.Atk + " damage!"
 }
 var enemyPrepare = function(){
   combatLog.innerText = "Enemy is preparing an attack!"
+  console.log(lastMove);
 }
 var enemyHardHit = function(){
   player.Hp = player.Hp - enemy.Atk * 3;
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy deals a crushing blow for " + enemy.Atk * 3 + " damage!"
   lastMove = "enemyHardHit"
+  console.log(lastMove);
 }
 
 
 attackButton.addEventListener('click', function(){
   cleanUp();
-  enemyMove();
+  slowEnemyAttack();
   playerAtk();
+  HpCheck();
+
 });
 spellButton.addEventListener('click', function(){
   cleanUp();
-  enemyMove();
+  slowEnemyAttack();
   playerFireball();
+  HpCheck();
 });
 
 
