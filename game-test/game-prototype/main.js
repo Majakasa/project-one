@@ -15,6 +15,12 @@ var playerHp = document.querySelector('#playerHp');
 var combatLog = document.querySelector('.combatLog');
 var spellButton = document.querySelector('.fireball');
 var attackButton = document.querySelector('.attack');
+var healButton = document.querySelector('.heal');
+var defendButton = document.querySelector('.defend');
+var slowButton = document.querySelector('.slow');
+var attackUpButton = document.querySelector('.attackUp');
+
+
 // // document.querySelector('.battleWrap').addEventListener("click", function(e) {
 // //   if(e.target && e.target.nodeName == "BUTTON") {
 // //     if(attackButton){
@@ -46,7 +52,7 @@ var enemy = {
   Mana: 50,
   First: undefined,
 };
-
+var playerAtkAfter;
 var timer;
 function slowEnemyAttack() {
   timer = window.setTimeout(enemyMove, 2000);
@@ -54,9 +60,7 @@ function slowEnemyAttack() {
 var slowPlayerAttack = function(){
   timer = window.setTimeout(playerAtk, 2000);
 }
-var slowPlayerSpell = function(){
-  timer = window.setTimeout(playerFireball, 2000);
-}
+
 
 var prority = function(){
   if(player.Speed > enemy.Speed){
@@ -110,6 +114,7 @@ var enemyMove = function(){
       lastMove = "waiting"
     }
   HpCheck();
+  console.log("end");
 }
 
 var cleanUp = function(){
@@ -118,10 +123,12 @@ var cleanUp = function(){
 var HpCheck = function(){
   if(player.Hp <= 0){
     combatLog.innerText = "\n \n You have died..."
+    playerHp.innerText = 0
     console.log("you died")
   }
   if(enemy.Hp <= 0){
     combatLog.innerText = "\n \n You won!"
+    enemyHp.innerText = 0
   }
 }
 
@@ -136,8 +143,13 @@ var playerAtk = function(){
   enemy.Hp = enemy.Hp - (player.Atk - enemy.Def);
   enemyHp.innerText = "Hp " + enemy.Hp;
   combatLog.innerText += "\n You Attack for " + (player.Atk - enemy.Def) + " damage!"
-
 }
+var playerDefend = function(){
+  player.Def = player.Def + 3;
+  combatLog.innerText = "Enemy Def rose by 3!"
+  console.log(lastMove);
+}
+
 var enemyDefUp = function(){
   enemy.Def = enemy.Def + 3;
   combatLog.innerText = "Enemy Def rose by 3!"
@@ -167,6 +179,14 @@ var enemyHardHit = function(){
   lastMove = "enemyHardHit"
   console.log(lastMove);
 }
+var heal = function(){
+  player.Hp = player.Hp + 20;
+  combatLog.innerText = "\n You recover 20Hp!"
+  if(player.Hp > 100){
+    player.Hp = 100;
+  }
+  playerHp.innerText = "Hp " + player.Hp;
+}
 
 
 attackButton.addEventListener('click', function(){
@@ -174,6 +194,13 @@ attackButton.addEventListener('click', function(){
   prority();
   slowEnemyAttack();
   playerAtk();
+  HpCheck();
+});
+healButton.addEventListener('click', function(){
+  cleanUp();
+  prority();
+  slowEnemyAttack();
+  heal();
   HpCheck();
 
 });
