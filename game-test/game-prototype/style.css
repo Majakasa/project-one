@@ -1,0 +1,66 @@
+*{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fullWrap{
+  width: 100vw;
+  height: 100%;
+  background-color: grey;
+  border: 2px solid black;
+  margin: 0 auto;
+}
+
+.hpBar{
+  border: 3px solid black;
+  width: 600px;
+  text-align: center;
+  background-color: lightblue;
+  margin: 0 auto;
+}
+
+.enemy{
+  text-align: center;
+  height: 400px;
+  width: 300px;
+  background-color: lightpink;
+  margin: 0 auto;
+}
+
+.battleText{
+  width: 700px;
+  text-align: center;
+  border: 1px solid yellow;
+  background-color: black;
+  color: white;
+  margin: 0 auto;
+}
+
+.battleWrap{
+  background-color: lightyellow;
+  height: 150px;
+  width: 800px;
+  margin: 0 auto;
+  border: 1px solid black;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  padding-top: 10px;
+
+}
+.attack{
+  height: 100px;
+  width: 170px;
+  background-color: lightgreen;
+}
+
+.special{
+  height: 100px;
+  width: 170px;
+  background-color: lightgreen;
+}
+
+
+
+
+/*test*/
