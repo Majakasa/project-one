@@ -1,17 +1,17 @@
 window.onload = function() {
 
 var setUp = function(){
-  enemyHp = document.querySelector('#enemyHp');
-  playerHp = document.querySelector('#playerHp')
-  combatLog = document.querySelector('.combatLog')
   enemyHp.innerText = "HP " + enemy.Hp;
   playerHp.innerText = "HP " + player.Hp;
   combatLog.innerText = "An Enemy has appeared! Choose an action!"
-
-  console.log("test");
+  console.log("setup complete");
 }
+
 setUp();
 }
+enemyHp = document.querySelector('#enemyHp');
+playerHp = document.querySelector('#playerHp')
+combatLog = document.querySelector('.combatLog')
 
 var player = {
   Hp: 100,
@@ -25,3 +25,25 @@ var enemy = {
   Def: 10,
   Speed: 9,
 }
+var at = function(){
+  enemy.Hp = enemy.Hp - 10;
+  enemyHp.innerText = "HP " + enemy.Hp;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// leave
