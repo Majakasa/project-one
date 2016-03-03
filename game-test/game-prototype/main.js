@@ -10,11 +10,24 @@ var setUp = function(){
 setUp();
 }
 
-enemyHp = document.querySelector('#enemyHp');
-playerHp = document.querySelector('#playerHp');
-combatLog = document.querySelector('.combatLog');
-spellButton = document.querySelector('.fireball');
-attackButton = document.querySelector('.attack');
+var enemyHp = document.querySelector('#enemyHp');
+var playerHp = document.querySelector('#playerHp');
+var combatLog = document.querySelector('.combatLog');
+var spellButton = document.querySelector('.fireball');
+var attackButton = document.querySelector('.attack');
+// // document.querySelector('.battleWrap').addEventListener("click", function(e) {
+// //   if(e.target && e.target.nodeName == "BUTTON") {
+// //     if(attackButton){
+// //       console.log("t");
+// //     }
+// //     else{
+// //       console.log("u");
+// //     }
+//
+//
+// 	// }
+//
+// });
 
 
 var player = {
@@ -158,6 +171,7 @@ var enemyHardHit = function(){
 
 attackButton.addEventListener('click', function(){
   cleanUp();
+  prority();
   slowEnemyAttack();
   playerAtk();
   HpCheck();

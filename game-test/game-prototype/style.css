@@ -40,26 +40,54 @@
 .battleWrap{
   background-color: lightyellow;
   height: 150px;
-  width: 800px;
+  width: 330px;
   margin: 0 auto;
   border: 1px solid black;
   display: flex;
   text-align: center;
   justify-content: space-around;
+  flex-wrap: wrap;
   padding-top: 10px;
 
 }
-.attack{
-  height: 100px;
-  width: 170px;
+#moves{
+  height: 50px;
+  width: 85px;
+
+  background-color: lightgreen;
+  font-size: 16px;
+}
+/*.attack{
+  height: 50px;
+  width: 85px;
+  background-color: lightgreen;
+}
+.defend{
+  height: 50px;
+  width: 85px;
   background-color: lightgreen;
 }
 
 .fireball{
-  height: 100px;
-  width: 170px;
+  height: 50px;
+  width: 85px;
   background-color: lightgreen;
 }
+.slow{
+  height: 50px;
+  width: 85px;
+  background-color: lightgreen;
+}
+.heal{
+  height: 50px;
+  width: 85px;
+  background-color: lightgreen;
+}
+.attackUp{
+  height: 50px;
+  width: 85px;
+  background-color: lightgreen;
+}*/
 
 
 
