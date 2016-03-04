@@ -140,7 +140,6 @@ var checkProtect = function(){
 }
 var protectCheck = function(){
   timer = window.setTimeout(checkProtect, 2100);
-
 }
 
 var HpCheck = function(){
@@ -161,15 +160,26 @@ var HpCheck = function(){
     enemy.Hp = 120;
     enemyHp.innerText = "Hp " + enemy.Hp;
   }
-
+  if(enemy.Hp <= 60){
+    enemy.attack = enemy.attack + 5;
+    enemy.Mana = enemy.Mana + 15;
+    enemy.Speed = enemy.Speed + 5;
+    combatLog.innerText += " Enemy is enraged!";
+  }
 }
 
 
 var enemyAtk = function(){
+  if(playerLastMove == "playerProtect"){
+    playerHp.innerText = "Hp " + player.Hp;
+    combatLog.innerText = " Enemy Attacks for " + 0 + " damage!";
+  }
+  else{
   player.Hp = player.Hp - (enemy.Atk - player.Def);
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!";
   console.log(enemyLastMove);
+  }
 }
 var playerAtk = function(){
   enemy.Hp = enemy.Hp - (player.Atk - enemy.Def);
@@ -178,20 +188,12 @@ var playerAtk = function(){
   playerLastMove = "playerAtk";
 }
 var playerProtect = function(){
-  if(player.Mana < 8){
-    combatLog.innerText = "Not enough mana";
-  }
-  else {
   player.Mana = player.Mana - 8;
   player.Def = player.Def + 100;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "player is protected!";
   playerLastMove = "playerProtect";
-
-  }
-
   console.log(enemyLastMove);
-
 }
 
 var enemyDefUp = function(){
@@ -215,46 +217,44 @@ var enemyFireball = function(){
   enemyMana.innerText = "Mana " + enemy.Mana;
   player.Hp = player.Hp - enemy.Atk;
   playerHp.innerText = "Hp " + player.Hp;
-
   combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!";
   console.log(enemyLastMove);
   }
 }
 var playerFireball = function(){
-  if(player.Mana < 15){
-    combatLog.innerText = "Not enough mana";
-  }
-  else {
   player.Mana = player.Mana - 15;
   enemy.Hp = enemy.Hp - player.Atk;
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n Player cast Fireball! " + player.Atk + " damage!";
   playerLastMove = "playerFireball";
-  }
 }
+
 var enemyPrepare = function(){
   combatLog.innerText = "Enemy is preparing an attack!";
   console.log(enemyLastMove);
 }
 var enemyHardHit = function(){
+  if(playerLastMove == "playerProtect"){
+    playerHp.innerText = "Hp " + player.Hp;
+    combatLog.innerText = " Enemy Attacks for " + 0 + " damage!";
+  }
+  else{
   player.Hp = player.Hp - ((enemy.Atk * 3) - player.Def)
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy deals a crushing blow for " + ((enemy.Atk * 3) - player.Def)  + " damage!";
   enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
+  }
 }
 var playerHeal = function(){
-  if(player.Mana < 7){
-    combatLog.innerText = "Not enough mana";
-  }
-  else {
+
   player.Mana = player.Mana - 7;
   player.Hp = player.Hp + 20;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n You recover 20Hp!"
   playerLastMove = "playerHeal";
-  }
+
 }
 var playerSlow = function(){
   enemy.Speed = enemy.Speed - 3;
@@ -262,6 +262,16 @@ var playerSlow = function(){
   playerLastMove = "playerSlow";
   console.log(enemyLastMove);
 }
+
+var enemyEnrageCheck = function(){
+  if(enemy.Hp <= 60){
+    enemy.attack = enemy.attack + 5;
+    enemy.Mana = enemy.Mana + 15;
+    enemy.Speed = enemy.Speed + 5;
+  }
+}
+
+
 
 attackButton.addEventListener('click', function(){
   cleanUp();
@@ -271,10 +281,15 @@ attackButton.addEventListener('click', function(){
 });
 protectButton.addEventListener('click', function(){
   cleanUp();
+  if(player.Mana < 8){
+    combatLog.innerText = "Not enough mana";
+  }
+  else {
   slowEnemyAttack();
   playerProtect();
   HpCheck();
   protectCheck();
+  }
 });
 slowButton.addEventListener('click', function(){
   cleanUp();
@@ -284,15 +299,25 @@ slowButton.addEventListener('click', function(){
 });
 healButton.addEventListener('click', function(){
   cleanUp();
+  if(player.Mana < 7){
+    combatLog.innerText = "Not enough mana";
+  }
+  else {
   slowEnemyAttack();
   playerHeal();
   HpCheck();
+  }
 });
 spellButton.addEventListener('click', function(){
   cleanUp();
+  if(player.Mana < 15){
+    combatLog.innerText = "Not enough mana";
+  }
+  else {
   slowEnemyAttack();
   playerFireball();
   HpCheck();
+  }
 });
 attackUpButton.addEventListener('click', function(){
   cleanUp();
