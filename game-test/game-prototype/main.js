@@ -100,52 +100,64 @@ var enemyMove = function(){
 
   if(enemyLastMove === "enemyPrepare"){
     enemyHardHit();
-    enemyLastMove = "HardHit"
+    enemyLastMove = "HardHit";
   }
     else if(random() >= 5){
     enemyAtk();
-    enemyLastMove = "enemyAtk"
+    enemyLastMove = "enemyAtk";
     console.log("Atk");
     }
     else if(random() == 4) {
       enemyDefUp();
-      enemyLastMove = "enemyDefUp"
+      enemyLastMove = "enemyDefUp";
       console.log("Def up");
     }
     else if(random() == 3) {
       enemyFireball();
-      enemyLastMove = "enemyFireball"
+      enemyLastMove = "enemyFireball";
       console.log("fireball");
     }
     else if(random() == 2) {
        enemyPrepare();
-       enemyLastMove = "enemyPrepare"
+       enemyLastMove = "enemyPrepare";
     }
     else if(random() == 1) {
-      combatLog.innerText = "Enemy is waiting"
-      enemyLastMove = "waiting"
+      combatLog.innerText = "Enemy is waiting";
+      enemyLastMove = "waiting";
     }
+    else{
+    enemyAtk();
+    enemyLastMove = "enemyAtk";
+    console.log("Atk");
+    }
+
   HpCheck();
-  console.log(player.Def);
+  console.log("enemy moved");
 }
 
 var cleanUp = function(){
-  combatLog.innerText = " "
+  combatLog.innerText = " ";
 }
-var protectCheck = function(){
+var checkProtect = function(){
   if(playerLastMove == "playerProtect"){
     player.Def = player.Def - 100;
+    console.log(player.Def);
   }
 }
+var protectCheck = function(){
+  timer = window.setTimeout(checkProtect, 2100);
+
+}
+
 var HpCheck = function(){
   if(player.Hp <= 0){
-    combatLog.innerText = "\n \n You have died..."
-    playerHp.innerText = 0
-    console.log("you died")
+    combatLog.innerText = "\n \n You have died...";
+    playerHp.innerText = 0;
+    console.log("you died");
   }
   if(enemy.Hp <= 0){
-    combatLog.innerText = "\n \n You won!"
-    enemyHp.innerText = 0
+    combatLog.innerText = "\n \n You won!";
+    enemyHp.innerText = 0;
   }
   if(player.Hp > 100){
     player.Hp = 100;
@@ -161,13 +173,13 @@ var HpCheck = function(){
 var enemyAtk = function(){
   player.Hp = player.Hp - (enemy.Atk - player.Def);
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!"
+  combatLog.innerText = " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!";
   console.log(enemyLastMove);
 }
 var playerAtk = function(){
   enemy.Hp = enemy.Hp - (player.Atk - enemy.Def);
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText += "\n You Attack for " + (player.Atk - enemy.Def) + " damage!"
+  combatLog.innerText += "\n You Attack for " + (player.Atk - enemy.Def) + " damage!";
   playerLastMove = "playerAtk";
 }
 var playerProtect = function(){
@@ -178,25 +190,25 @@ var playerProtect = function(){
   player.Mana = player.Mana - 8;
   player.Def = player.Def + 100;
   playerMana.innerText = "Mana " + player.Mana;
-  combatLog.innerText += "player is protected!"
-  playerLastMove = "playerProtect"
-  console.log(player.Def);
+  combatLog.innerText += "player is protected!";
+  playerLastMove = "playerProtect";
+
   }
 
   console.log(enemyLastMove);
-  console.log(player.Def);
+
 }
 
 var enemyDefUp = function(){
   enemy.Def = enemy.Def + 3;
-  combatLog.innerText = "Enemy Def rose by 3!"
+  combatLog.innerText = "Enemy Def rose by 3!";
 
   console.log(enemyLastMove);
 }
 var playerAtkUp = function(){
   player.Atk = player.Atk + 3;
-  combatLog.innerText = "Player Atk rose by 3!"
-  playerLastMove = "playerAtkUp"
+  combatLog.innerText = "Player Atk rose by 3!";
+  playerLastMove = "playerAtkUp";
   console.log(enemyLastMove);
 }
 var enemyFireball = function(){
@@ -205,9 +217,11 @@ var enemyFireball = function(){
   }
   else {
   enemy.Mana = enemy.Mana - 15;
+  enemyMana.innerText = "Mana " + enemy.Mana;
   player.Hp = player.Hp - enemy.Atk;
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!"
+
+  combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!";
   console.log(enemyLastMove);
   }
 }
@@ -220,19 +234,19 @@ var playerFireball = function(){
   enemy.Hp = enemy.Hp - player.Atk;
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
-  combatLog.innerText += "\n Player cast Fireball! " + player.Atk + " damage!"
+  combatLog.innerText += "\n Player cast Fireball! " + player.Atk + " damage!";
   playerLastMove = "playerFireball";
   }
 }
 var enemyPrepare = function(){
-  combatLog.innerText = "Enemy is preparing an attack!"
+  combatLog.innerText = "Enemy is preparing an attack!";
   console.log(enemyLastMove);
 }
 var enemyHardHit = function(){
-  player.Hp = player.Hp - (player.Def - (enemy.Atk * 3))
+  player.Hp = player.Hp - ((enemy.Atk * 3) - player.Def)
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = "Enemy deals a crushing blow for " + (player.Def - (enemy.Atk * 3))  + " damage!"
-  enemyLastMove = "enemyHardHit"
+  combatLog.innerText = "Enemy deals a crushing blow for " + ((enemy.Atk * 3) - player.Def)  + " damage!";
+  enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
 }
 var playerHeal = function(){
@@ -244,17 +258,13 @@ var playerHeal = function(){
   player.Hp = player.Hp + 20;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n You recover 20Hp!"
-  // if(player.Hp > 100){
-  //   player.Hp = 100;
-  // }
-  // playerHp.innerText = "Hp " + player.Hp;
   playerLastMove = "playerHeal";
   }
 }
 var playerSlow = function(){
   enemy.Speed = enemy.Speed - 3;
-  combatLog.innerText = "Enemy Speed lowered by 3!"
-  playerLastMove = "playerSlow"
+  combatLog.innerText = "Enemy Speed lowered by 3!";
+  playerLastMove = "playerSlow";
   console.log(enemyLastMove);
 }
 
@@ -298,12 +308,7 @@ attackUpButton.addEventListener('click', function(){
 
 
 
-// damages bad guy and updates hp
-// var test = function(){
-//   enemy.Hp = enemy.Hp - 10;
-//   enemyHp.innerText = "HP " + enemy.Hp;
-//
-// }
+
 
 
 
