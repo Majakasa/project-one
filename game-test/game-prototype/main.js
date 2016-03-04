@@ -5,7 +5,7 @@ var setUp = function(){
   playerHp.innerText = "HP " + player.Hp;
   playerMana.innerText = "HP " + player.Mana;
   enemyMana.innerText = "HP " + enemy.Mana;
-  combatLog.innerText = "An Enemy has appeared! Choose an action!"
+  combatLog.innerText = "An Enemy has appeared! \n Choose an action!"
   console.log("setup complete");
 }
 
