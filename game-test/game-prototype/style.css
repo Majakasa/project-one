@@ -30,7 +30,7 @@
 .combatLog{
   width: 700px;
   height: 60px;
-  text-align: center;
+  text-align: left;
   border: 1px solid yellow;
   background-color: black;
   color: white;
