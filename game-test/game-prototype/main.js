@@ -166,9 +166,8 @@ var HpCheck = function(){
     enemy.Speed += 5;
     combatLog.innerText += " Enemy is enraged!";
   }
-
-
 }
+
 var negativeCheck = function(e){
   if(e < 0){
     e = 1;
@@ -177,12 +176,10 @@ var negativeCheck = function(e){
 }
 
 var enemyAtk = function(){
-
   player.Hp -= negativeCheck(enemy.Atk - player.Def)
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = " Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def) + " damage!";
   console.log(enemyLastMove);
-
 }
 var playerAtk = function(){
   enemy.Hp -= negativeCheck((player.Atk - enemy.Def));
@@ -243,7 +240,6 @@ var enemyHardHit = function(){
   combatLog.innerText = "Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
   enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
-
 }
 var playerHeal = function(){
   player.Hp += 20;
@@ -251,7 +247,6 @@ var playerHeal = function(){
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n You recover 20Hp!"
   playerLastMove = "playerHeal";
-
 }
 var playerSlow = function(){
   enemy.Speed -= 3;
