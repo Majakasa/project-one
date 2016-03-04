@@ -3,6 +3,8 @@ window.onload = function() {
 var setUp = function(){
   enemyHp.innerText = "HP " + enemy.Hp;
   playerHp.innerText = "HP " + player.Hp;
+  playerMana.innerText = "HP " + player.Mana;
+  enemyMana.innerText = "HP " + enemy.Mana;
   combatLog.innerText = "An Enemy has appeared! Choose an action!"
   console.log("setup complete");
 }
@@ -12,6 +14,8 @@ setUp();
 
 var enemyHp = document.querySelector('#enemyHp');
 var playerHp = document.querySelector('#playerHp');
+var playerMana = document.querySelector('#playerMana');
+var enemyMana = document.querySelector('#enemyMana');
 var combatLog = document.querySelector('.combatLog');
 var spellButton = document.querySelector('.fireball');
 var attackButton = document.querySelector('.attack');
@@ -143,6 +147,14 @@ var HpCheck = function(){
     combatLog.innerText = "\n \n You won!"
     enemyHp.innerText = 0
   }
+  if(player.Hp > 100){
+    player.Hp = 100;
+  }
+  if(enemy.Hp > 120){
+    enemy.Hp = 120;
+  }
+  enemy.innerText = "Hp " + enemy.Hp;
+  playerHp.innerText = "Hp " + player.Hp;
 }
 
 
@@ -165,6 +177,7 @@ var playerProtect = function(){
   else {
   player.Mana = player.Mana - 8;
   player.Def = player.Def + 100;
+  playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "player is protected!"
   playerLastMove = "playerProtect"
   console.log(player.Def);
@@ -196,6 +209,7 @@ var playerFireball = function(){
   player.Mana = player.Mana - 15;
   enemy.Hp = enemy.Hp - player.Atk;
   enemyHp.innerText = "Hp " + enemy.Hp;
+  playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n Player cast Fireball! " + player.Atk + " damage!"
   playerLastMove = "playerFireball";
 }
@@ -211,12 +225,14 @@ var enemyHardHit = function(){
   console.log(enemyLastMove);
 }
 var playerHeal = function(){
+  player.Mana = player.Mana - 7;
   player.Hp = player.Hp + 20;
+  playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n You recover 20Hp!"
-  if(player.Hp > 100){
-    player.Hp = 100;
-  }
-  playerHp.innerText = "Hp " + player.Hp;
+  // if(player.Hp > 100){
+  //   player.Hp = 100;
+  // }
+  // playerHp.innerText = "Hp " + player.Hp;
   playerLastMove = "playerHeal";
 }
 var playerSlow = function(){

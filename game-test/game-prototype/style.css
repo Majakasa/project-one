@@ -15,6 +15,13 @@
   border: 3px solid black;
   width: 600px;
   text-align: center;
+  background-color: green;
+  margin: 0 auto;
+}
+.manaBar{
+  border: 3px solid black;
+  width: 600px;
+  text-align: center;
   background-color: lightblue;
   margin: 0 auto;
 }
