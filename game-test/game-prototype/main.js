@@ -64,12 +64,6 @@ function slowEnemyAttack() {
 var slowPlayerAttack = function(){
   timer = window.setTimeout(playerAtk, 2000);
 }
-// var highDef = function(){
-//   if(enemyMove < 0){
-//
-//
-//   }
-// }
 
 
 var prority = function(){
@@ -161,12 +155,13 @@ var HpCheck = function(){
   }
   if(player.Hp > 100){
     player.Hp = 100;
+    playerHp.innerText = "Hp " + player.Hp;
   }
   if(enemy.Hp > 120){
     enemy.Hp = 120;
+    enemyHp.innerText = "Hp " + enemy.Hp;
   }
-  enemy.innerText = "Hp " + enemy.Hp;
-  playerHp.innerText = "Hp " + player.Hp;
+
 }
 
 
