@@ -11,7 +11,8 @@ var setUp = function(){
 
 setUp();
 }
-
+var bleh = document.querySelector('.bleh');
+var playerHpBar = document.querySelector('.nope');
 var enemyHp = document.querySelector('#enemyHp');
 var playerHp = document.querySelector('#playerHp');
 var playerMana = document.querySelector('#playerMana');
@@ -66,21 +67,35 @@ var slowPlayerAttack = function(){
 }
 
 
-var prority = function(){
-  if(player.Speed > enemy.Speed){
-    player.First = true;
-    enemy.First = false;
-  }
-  else{
-    enemy.First = true;
-    player.First = false;
-  }
-}
-if(player.First){
-    slowEnemyAttack();
-}else{
 
+var playerPercentDamage = function (e){
+   playerPercent = Math.floor((e / 100) * 100);
+  return playerPercent;
 }
+var enemyPercentDamage = function (e){
+    var enemyPercent = Math.floor((e / 120) * 100);
+ return enemyPercent;
+}
+
+
+
+
+
+// var prority = function(){
+//   if(player.Speed > enemy.Speed){
+//     player.First = true;
+//     enemy.First = false;
+//   }
+//   else{
+//     enemy.First = true;
+//     player.First = false;
+//   }
+// }
+// if(player.First){
+//     slowEnemyAttack();
+// }else{
+//
+// }
 
 
 var enemyLastMove = undefined;
@@ -174,17 +189,24 @@ var negativeCheck = function(e){
   }
   return e;
 }
+var enemyDamage = negativeCheck(enemy.Atk - player.Def);
+var playerDamage = negativeCheck(player.Atk - enemy.Def);
+var hpBarPlayer = playerPercentDamage(enemyDamage);
+
+
+
+
 
 var enemyAtk = function(){
-  player.Hp -= negativeCheck(enemy.Atk - player.Def)
+  player.Hp -= enemyDamage;
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = " Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def) + " damage!";
+  combatLog.innerText = " Enemy Attacks for " + enemyDamage + " damage!";
   console.log(enemyLastMove);
 }
 var playerAtk = function(){
-  enemy.Hp -= negativeCheck((player.Atk - enemy.Def));
+  enemy.Hp -= playerDamage;
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText += "\n You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
+  combatLog.innerText += "\n You Attack for " + playerDamage + " damage!";
   playerLastMove = "playerAtk";
 }
 var playerProtect = function(){
@@ -195,11 +217,9 @@ var playerProtect = function(){
   playerLastMove = "playerProtect";
   console.log(enemyLastMove);
 }
-
 var enemyDefUp = function(){
   enemy.Def +=  3;
   combatLog.innerText = "Enemy Def rose by 3!";
-
   console.log(enemyLastMove);
 }
 var playerAtkUp = function(){
@@ -229,7 +249,6 @@ var playerFireball = function(){
   combatLog.innerText += "\n Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
   playerLastMove = "playerFireball";
 }
-
 var enemyPrepare = function(){
   combatLog.innerText = "Enemy is preparing an attack!";
   console.log(enemyLastMove);
