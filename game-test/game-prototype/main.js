@@ -181,7 +181,8 @@ var playerProtect = function(){
   combatLog.innerText += "player is protected!"
   playerLastMove = "playerProtect"
   console.log(player.Def);
-}
+  }
+
   console.log(enemyLastMove);
   console.log(player.Def);
 }
@@ -199,19 +200,29 @@ var playerAtkUp = function(){
   console.log(enemyLastMove);
 }
 var enemyFireball = function(){
+  if(enemy.Mana < 15){
+    combatLog.innerText = "Enemy Fireball fizzled";
+  }
+  else {
   enemy.Mana = enemy.Mana - 15;
   player.Hp = player.Hp - enemy.Atk;
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!"
   console.log(enemyLastMove);
+  }
 }
 var playerFireball = function(){
+  if(player.Mana < 15){
+    combatLog.innerText = "Not enough mana";
+  }
+  else {
   player.Mana = player.Mana - 15;
   enemy.Hp = enemy.Hp - player.Atk;
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n Player cast Fireball! " + player.Atk + " damage!"
   playerLastMove = "playerFireball";
+  }
 }
 var enemyPrepare = function(){
   combatLog.innerText = "Enemy is preparing an attack!"
@@ -225,6 +236,10 @@ var enemyHardHit = function(){
   console.log(enemyLastMove);
 }
 var playerHeal = function(){
+  if(player.Mana < 7){
+    combatLog.innerText = "Not enough mana";
+  }
+  else {
   player.Mana = player.Mana - 7;
   player.Hp = player.Hp + 20;
   playerMana.innerText = "Mana " + player.Mana;
@@ -234,6 +249,7 @@ var playerHeal = function(){
   // }
   // playerHp.innerText = "Hp " + player.Hp;
   playerLastMove = "playerHeal";
+  }
 }
 var playerSlow = function(){
   enemy.Speed = enemy.Speed - 3;
