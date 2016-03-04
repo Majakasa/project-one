@@ -167,7 +167,12 @@ var HpCheck = function(){
     combatLog.innerText += " Enemy is enraged!";
   }
 }
-
+var negativeCheck = function(e){
+  if(e < 0){
+    e = 1;
+  }
+  return e;
+}
 
 var enemyAtk = function(){
   if(playerLastMove == "playerProtect"){
@@ -175,16 +180,16 @@ var enemyAtk = function(){
     combatLog.innerText = " Enemy Attacks for " + 0 + " damage!";
   }
   else{
-  player.Hp = player.Hp - (enemy.Atk - player.Def);
+  player.Hp = player.Hp - (enemy.Atk - player.Def)
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!";
   console.log(enemyLastMove);
   }
 }
 var playerAtk = function(){
-  enemy.Hp = enemy.Hp - (player.Atk - enemy.Def);
+  enemy.Hp -= negativeCheck((player.Atk - enemy.Def));
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText += "\n You Attack for " + (player.Atk - enemy.Def) + " damage!";
+  combatLog.innerText += "\n You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
   playerLastMove = "playerAtk";
 }
 var playerProtect = function(){
