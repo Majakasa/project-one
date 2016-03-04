@@ -134,7 +134,7 @@ var cleanUp = function(){
 }
 var checkProtect = function(){
   if(playerLastMove == "playerProtect"){
-    player.Def = player.Def - 100;
+    player.Def -= 100;
     console.log(player.Def);
   }
 }
@@ -161,11 +161,13 @@ var HpCheck = function(){
     enemyHp.innerText = "Hp " + enemy.Hp;
   }
   if(enemy.Hp <= 60){
-    enemy.attack = enemy.attack + 5;
-    enemy.Mana = enemy.Mana + 15;
-    enemy.Speed = enemy.Speed + 5;
+    enemy.attack += 5;
+    enemy.Mana +=  15;
+    enemy.Speed += 5;
     combatLog.innerText += " Enemy is enraged!";
   }
+
+
 }
 var negativeCheck = function(e){
   if(e < 0){
@@ -175,16 +177,12 @@ var negativeCheck = function(e){
 }
 
 var enemyAtk = function(){
-  if(playerLastMove == "playerProtect"){
-    playerHp.innerText = "Hp " + player.Hp;
-    combatLog.innerText = " Enemy Attacks for " + 0 + " damage!";
-  }
-  else{
-  player.Hp = player.Hp - (enemy.Atk - player.Def)
+
+  player.Hp -= negativeCheck(enemy.Atk - player.Def)
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = " Enemy Attacks for " + (enemy.Atk - player.Def) + " damage!";
+  combatLog.innerText = " Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def) + " damage!";
   console.log(enemyLastMove);
-  }
+
 }
 var playerAtk = function(){
   enemy.Hp -= negativeCheck((player.Atk - enemy.Def));
@@ -193,8 +191,8 @@ var playerAtk = function(){
   playerLastMove = "playerAtk";
 }
 var playerProtect = function(){
-  player.Mana = player.Mana - 8;
-  player.Def = player.Def + 100;
+  player.Mana -= 8;
+  player.Def += 100;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "player is protected!";
   playerLastMove = "playerProtect";
@@ -202,13 +200,13 @@ var playerProtect = function(){
 }
 
 var enemyDefUp = function(){
-  enemy.Def = enemy.Def + 3;
+  enemy.Def +=  3;
   combatLog.innerText = "Enemy Def rose by 3!";
 
   console.log(enemyLastMove);
 }
 var playerAtkUp = function(){
-  player.Atk = player.Atk + 3;
+  player.Atk += 3;
   combatLog.innerText = "Player Atk rose by 3!";
   playerLastMove = "playerAtkUp";
   console.log(enemyLastMove);
@@ -218,20 +216,20 @@ var enemyFireball = function(){
     combatLog.innerText = "Enemy Fireball fizzled";
   }
   else {
-  enemy.Mana = enemy.Mana - 15;
+  enemy.Mana -= 15;
   enemyMana.innerText = "Mana " + enemy.Mana;
-  player.Hp = player.Hp - enemy.Atk;
+  player.Hp -= enemy.Atk;
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!";
   console.log(enemyLastMove);
   }
 }
 var playerFireball = function(){
-  player.Mana = player.Mana - 15;
-  enemy.Hp = enemy.Hp - player.Atk;
+  player.Mana -= 15;
+  enemy.Hp -= player.Atk;
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
-  combatLog.innerText += "\n Player cast Fireball! " + player.Atk + " damage!";
+  combatLog.innerText += "\n Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
   playerLastMove = "playerFireball";
 }
 
@@ -240,41 +238,29 @@ var enemyPrepare = function(){
   console.log(enemyLastMove);
 }
 var enemyHardHit = function(){
-  if(playerLastMove == "playerProtect"){
-    playerHp.innerText = "Hp " + player.Hp;
-    combatLog.innerText = " Enemy Attacks for " + 0 + " damage!";
-  }
-  else{
-  player.Hp = player.Hp - ((enemy.Atk * 3) - player.Def)
+  player.Hp -= negativeCheck((enemy.Atk * 3) - player.Def)
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = "Enemy deals a crushing blow for " + ((enemy.Atk * 3) - player.Def)  + " damage!";
+  combatLog.innerText = "Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
   enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
-  }
+
 }
 var playerHeal = function(){
-
-  player.Mana = player.Mana - 7;
-  player.Hp = player.Hp + 20;
+  player.Hp += 20;
+  player.Mana -= 7;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n You recover 20Hp!"
   playerLastMove = "playerHeal";
 
 }
 var playerSlow = function(){
-  enemy.Speed = enemy.Speed - 3;
+  enemy.Speed -= 3;
   combatLog.innerText = "Enemy Speed lowered by 3!";
   playerLastMove = "playerSlow";
   console.log(enemyLastMove);
 }
 
-var enemyEnrageCheck = function(){
-  if(enemy.Hp <= 60){
-    enemy.attack = enemy.attack + 5;
-    enemy.Mana = enemy.Mana + 15;
-    enemy.Speed = enemy.Speed + 5;
-  }
-}
+
 
 
 
