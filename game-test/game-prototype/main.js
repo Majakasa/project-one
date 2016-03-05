@@ -11,8 +11,8 @@ var setUp = function(){
 
 setUp();
 }
-
-
+var bleh = document.querySelector('.bleh');
+var playerHpBar = document.querySelector('.nope');
 var enemyHp = document.querySelector('#enemyHp');
 var playerHp = document.querySelector('#playerHp');
 var playerMana = document.querySelector('#playerMana');
