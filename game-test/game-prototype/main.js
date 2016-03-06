@@ -72,8 +72,16 @@ var playerPercentDamage = function (e){
    playerPercent = Math.floor((e / 100) * 100);
   return playerPercent;
 }
+var playerPercentMana = function (e){
+   playerPercent = Math.floor((e / 70) * 100);
+  return playerPercent;
+}
 var enemyPercentDamage = function (e){
     var enemyPercent = Math.floor((e / 120) * 100);
+ return enemyPercent;
+}
+var enemyPercentMana = function (e){
+    var enemyPercent = Math.floor((e / 50) * 100);
  return enemyPercent;
 }
 
@@ -189,22 +197,27 @@ var negativeCheck = function(e){
   }
   return e;
 }
-var enemyDamage = negativeCheck(enemy.Atk - player.Def);
-var playerDamage = negativeCheck(player.Atk - enemy.Def);
+
 var hpBarPlayer = playerPercentDamage(enemyDamage);
+var hpBarEnemy = enemyPercentDamage(playerDamage);
+
+var ManaBarEnemy = enemyPercentMana(playerDamage);
 
 
 
+enemyHp.style.width = enemy.Hp + "%";
 
 
 var enemyAtk = function(){
   player.Hp -= enemyDamage;
+  playerHp.style.width = playerHp.style.width - (hpBarPlayer + "%");
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = " Enemy Attacks for " + enemyDamage + " damage!";
   console.log(enemyLastMove);
 }
 var playerAtk = function(){
   enemy.Hp -= playerDamage;
+  enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
   combatLog.innerText += "\n You Attack for " + playerDamage + " damage!";
   playerLastMove = "playerAtk";
@@ -236,6 +249,7 @@ var enemyFireball = function(){
   enemy.Mana -= 15;
   enemyMana.innerText = "Mana " + enemy.Mana;
   player.Hp -= enemy.Atk;
+  playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!";
   console.log(enemyLastMove);
@@ -244,6 +258,7 @@ var enemyFireball = function(){
 var playerFireball = function(){
   player.Mana -= 15;
   enemy.Hp -= player.Atk;
+  enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
   combatLog.innerText += "\n Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
@@ -255,6 +270,7 @@ var enemyPrepare = function(){
 }
 var enemyHardHit = function(){
   player.Hp -= negativeCheck((enemy.Atk * 3) - player.Def)
+  playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
   enemyLastMove = "enemyHardHit";
@@ -274,7 +290,8 @@ var playerSlow = function(){
   console.log(enemyLastMove);
 }
 
-
+var enemyDamage = negativeCheck(enemy.Atk - player.Def);
+var playerDamage = negativeCheck(player.Atk - enemy.Def);
 
 
 

@@ -1,25 +1,33 @@
 *{
   width: 100%;
   box-sizing: border-box;
+
 }
 
 .fullWrap{
   width: 100vw;
   height: 100%;
-  background-color: grey;
+  background-color: white;
   border: 2px solid black;
   margin: 0 auto;
-}
 
-.hpBar{
+}
+.backgroundBar{
   border: 3px solid black;
   width: 600px;
+  background-color: red;
+  margin: 0 auto;
+
+
+}
+.hpBar{
+  width: 100%;
   text-align: center;
   background-color: lightgreen;
   margin: 0 auto;
 }
 .manaBar{
-  border: 3px solid black;
+
   width: 600px;
   text-align: center;
   background-color: lightblue;
@@ -28,10 +36,12 @@
 
 .enemy{
   text-align: center;
-  height: 400px;
-  width: 300px;
-  background-color: lightpink;
-  margin: 0 auto;
+    height: auto;
+    width: auto;
+    max-width: 300px;
+    max-height: 300px;
+
+    margin: 0 auto;
 
 }
 
