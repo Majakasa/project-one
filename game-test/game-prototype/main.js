@@ -11,6 +11,8 @@ var setUp = function(){
 
 setUp();
 }
+var hardHitSound = document.querySelector('#hard')
+var boost = document.querySelector('#boost')
 var protect = document.querySelector('#protect')
 var fireBallSound = document.querySelector('#fireBall');
 var hitSound = document.querySelector('#hit');
@@ -56,7 +58,7 @@ var player = {
   First: undefined,
 };
 var enemy = {
-  Hp: 90,
+  Hp: 120,
   Atk: 13,
   Def: 10,
   Speed: 9,
@@ -210,14 +212,9 @@ var negativeCheck = function(e){
   return e;
 }
 
-var hpBarPlayer = playerPercentDamage(enemyDamage);
-var hpBarEnemy = enemyPercentDamage(playerDamage);
-
-var ManaBarEnemy = enemyPercentMana(playerDamage);
-
-
-
-
+// var hpBarPlayer = playerPercentDamage(enemyDamage);
+// var hpBarEnemy = enemyPercentDamage(playerDamage);
+// var ManaBarEnemy = enemyPercentMana(playerDamage);
 
 
 var enemyAtk = function(){
@@ -225,17 +222,17 @@ var enemyAtk = function(){
     player.Hp -= negativeCheck(enemy.Atk * 2 - player.Def);
     playerHp.style.width = player.Hp + "%";
     playerHp.innerText = "Hp " + player.Hp;
-    combatLog.innerText = " Enemy crits for " + negativeCheck(enemy.Atk * 2 - player.Def); + " damage!!!";
-    hitSound.play();
+    combatLog.innerText += "\n Enemy crits for " + negativeCheck(enemy.Atk * 2 - player.Def); + " damage!!!";
+    hardHitSound.play();
   }else if(random() == 1){
-      combatLog.innerText = " Enemy attack missed!"
+      combatLog.innerText += "\n Enemy attack missed!"
   }
   else{
 
   player.Hp -= negativeCheck(enemy.Atk - player.Def);
   playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = " Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def); + " damage!";
+  combatLog.innerText += "\n Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def); + " damage!";
   hitSound.play();
   console.log(enemyLastMove);
   }
@@ -245,8 +242,9 @@ var playerAtk = function(){
     enemy.Hp -= negativeCheck(player.Atk * 2 - enemy.Def);
     enemyHp.style.width = enemy.Hp + "%";
     enemyHp.innerText = "Hp " + enemy.Hp;
-    combatLog.innerText = " Enemy crits for " + negativeCheck(player.Atk * 2 - enemy.Def); + " damage!!!";
-    hitSound.play();
+    combatLog.innerText = " Critical hit for " + negativeCheck(player.Atk * 2 - enemy.Def); + " damage!!!";
+    hardHitSound.play();
+    dracky.classList.add("blinky");
   }
   else if(random() == 1){
       combatLog.innerText = " Your attack missed!"
@@ -255,36 +253,40 @@ var playerAtk = function(){
   enemy.Hp -= negativeCheck(player.Atk - enemy.Def);
   enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText += "\n You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
+  combatLog.innerText = " You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
   hitSound.play();
+  dracky.classList.add("blinky");
   playerLastMove = "playerAtk";
   }
+  HpCheck();
 }
 var playerProtect = function(){
   player.Mana -= 8;
   player.Def += 100;
   playerMana.innerText = "Mana " + player.Mana;
   playerMana.style.width = player.Mana + "%";
-  combatLog.innerText += "player is protected!";
+  combatLog.innerText = "Player is protected!";
   protect.play();
   playerLastMove = "playerProtect";
   console.log(enemyLastMove);
 }
 var enemyDefUp = function(){
   enemy.Def +=  3;
-  combatLog.innerText = "Enemy Def rose by 3!";
+  combatLog.innerText += "\n Enemy Def rose by 3!";
+  boost.play();
   console.log(enemyLastMove);
 }
 var playerAtkUp = function(){
   player.Atk += 3;
   combatLog.innerText = "Player Atk rose by 3!";
+  boost.play();
   playerLastMove = "playerAtkUp";
   console.log(enemyLastMove);
 
 }
 var enemyFireball = function(){
   if(enemy.Mana < 15){
-    combatLog.innerText = "Enemy Fireball fizzled";
+    combatLog.innerText += "\n Enemy Fireball fizzled";
   }
   else {
   enemy.Mana -= 15;
@@ -293,7 +295,7 @@ var enemyFireball = function(){
   player.Hp -= enemy.Atk;
   playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!";
+  combatLog.innerText += "\n Enemy cast Fireball! " + enemy.Atk + " damage!";
   fireBallSound.play();
   console.log(enemyLastMove);
   }
@@ -305,36 +307,37 @@ var playerFireball = function(){
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
   playerMana.style.width = player.Mana + "%";
-  combatLog.innerText += "\n Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
+  combatLog.innerText += " Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
   fireBallSound.play();
-  playerLastMove = "playerFireball";
+  HpCheck();
+  playerLastMove = " playerFireball";
 }
 var enemyPrepare = function(){
-  combatLog.innerText = "Enemy is preparing an attack!";
+  combatLog.innerText += "\n Enemy is preparing an attack!";
   console.log(enemyLastMove);
 }
 var enemyHardHit = function(){
   player.Hp -= negativeCheck((enemy.Atk * 3) - player.Def)
   playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = "Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
+  combatLog.innerText += "\n Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
+  hardHitSound.play();
   enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
 }
 var playerHeal = function(){
   player.Hp += 20;
   player.Mana -= 7;
-
   playerHp.style.width = player.Hp + "%";
   playerMana.style.width = player.Mana + "%";
-  combatLog.innerText += "\n You recover 20Hp!"
+  combatLog.innerText += " You recover 20Hp!"
   playerMana.innerText = "Mana " + player.Mana;
   healSound.play();
   playerLastMove = "playerHeal";
 }
 var playerSlow = function(){
   enemy.Speed -= 3;
-  combatLog.innerText = "Enemy Speed lowered by 3!";
+  combatLog.innerText += "\n Enemy Speed lowered by 3!";
   playerLastMove = "playerSlow";
   console.log(enemyLastMove);
 }
@@ -350,9 +353,9 @@ function blinkyDracky() {
 
 attackButton.addEventListener('click', function(){
   cleanUp();
-  slowEnemyAttack();
   playerAtk();
-  dracky.classList.add("blinky");
+  slowEnemyAttack();
+
   // dracky.classList.remove("blinky");
   HpCheck();
 });
@@ -370,8 +373,8 @@ protectButton.addEventListener('click', function(){
 });
 slowButton.addEventListener('click', function(){
   cleanUp();
-  slowEnemyAttack();
   playerSlow();
+  slowEnemyAttack();
   HpCheck();
 });
 healButton.addEventListener('click', function(){
@@ -380,8 +383,9 @@ healButton.addEventListener('click', function(){
     combatLog.innerText = "Not enough mana";
   }
   else {
-  slowEnemyAttack();
+  playerMana.innerText = "Mana " + player.Mana;
   playerHeal();
+  slowEnemyAttack();
   HpCheck();
   }
 });
@@ -391,15 +395,15 @@ spellButton.addEventListener('click', function(){
     combatLog.innerText = "Not enough mana";
   }
   else {
-  slowEnemyAttack();
   playerFireball();
+  slowEnemyAttack();
   HpCheck();
   }
 });
 attackUpButton.addEventListener('click', function(){
   cleanUp();
-  slowEnemyAttack();
   playerAtkUp();
+  slowEnemyAttack();
   HpCheck();
 });
 
