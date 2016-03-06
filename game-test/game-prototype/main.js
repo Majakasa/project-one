@@ -11,8 +11,8 @@ var setUp = function(){
 
 setUp();
 }
-var bleh = document.querySelector('.bleh');
-var playerHpBar = document.querySelector('.nope');
+var fanfare = document.querySelector('#fanfare')
+var battleTheme = document.querySelector('#battleTheme')
 var enemyHp = document.querySelector('#enemyHp');
 var playerHp = document.querySelector('#playerHp');
 var playerMana = document.querySelector('#playerMana');
@@ -25,6 +25,7 @@ var protectButton = document.querySelector('.protect');
 var slowButton = document.querySelector('.slow');
 var attackUpButton = document.querySelector('.attackUp');
 var dracky = document.querySelector('#enemy');
+
 
 
 // // document.querySelector('.battleWrap').addEventListener("click", function(e) {
@@ -171,11 +172,14 @@ var HpCheck = function(){
   if(player.Hp <= 0){
     combatLog.innerText = "\n \n You have died...";
     playerHp.innerText = 0;
-    console.log("you died");
+    battleTheme.pause();
   }
   if(enemy.Hp <= 0){
     combatLog.innerText = "\n \n You won!";
     enemyHp.innerText = 0;
+    dracky.style.backgroundImage = "url()";
+    battleTheme.pause();
+    fanfare.play();
   }
   if(player.Hp > 100){
     player.Hp = 100;
@@ -191,6 +195,7 @@ var HpCheck = function(){
     enemy.Speed += 5;
     combatLog.innerText += " Enemy is enraged!";
   }
+
 }
 
 var negativeCheck = function(e){
