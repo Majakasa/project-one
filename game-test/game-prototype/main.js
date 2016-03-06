@@ -211,17 +211,17 @@ enemyHp.style.width = enemy.Hp + "%";
 
 
 var enemyAtk = function(){
-  player.Hp -= enemyDamage;
+  player.Hp -= negativeCheck(enemy.Atk - player.Def);
   playerHp.style.width = playerHp.style.width - (hpBarPlayer + "%");
   playerHp.innerText = "Hp " + player.Hp;
-  combatLog.innerText = " Enemy Attacks for " + enemyDamage + " damage!";
+  combatLog.innerText = " Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def); + " damage!";
   console.log(enemyLastMove);
 }
 var playerAtk = function(){
-  enemy.Hp -= playerDamage;
+  enemy.Hp -= negativeCheck(player.Atk - enemy.Def);
   enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
-  combatLog.innerText += "\n You Attack for " + playerDamage + " damage!";
+  combatLog.innerText += "\n You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
 
   playerLastMove = "playerAtk";
 }
