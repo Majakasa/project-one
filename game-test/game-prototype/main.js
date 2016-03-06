@@ -24,6 +24,7 @@ var healButton = document.querySelector('.heal');
 var protectButton = document.querySelector('.protect');
 var slowButton = document.querySelector('.slow');
 var attackUpButton = document.querySelector('.attackUp');
+var dracky = document.querySelector('#enemy');
 
 
 // // document.querySelector('.battleWrap').addEventListener("click", function(e) {
@@ -149,6 +150,7 @@ var enemyMove = function(){
     }
 
   HpCheck();
+  dracky.classList.remove("blinky");
   console.log("enemy moved");
 }
 
@@ -220,6 +222,7 @@ var playerAtk = function(){
   enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
   combatLog.innerText += "\n You Attack for " + playerDamage + " damage!";
+
   playerLastMove = "playerAtk";
 }
 var playerProtect = function(){
@@ -240,6 +243,7 @@ var playerAtkUp = function(){
   combatLog.innerText = "Player Atk rose by 3!";
   playerLastMove = "playerAtkUp";
   console.log(enemyLastMove);
+
 }
 var enemyFireball = function(){
   if(enemy.Mana < 15){
@@ -293,12 +297,18 @@ var playerSlow = function(){
 var enemyDamage = negativeCheck(enemy.Atk - player.Def);
 var playerDamage = negativeCheck(player.Atk - enemy.Def);
 
+function blinkyDracky() {
+   dracky.style.visibility = ( dracky.style.visibility == 'visible' )? 'hidden' : 'visible';
+   setTimeout("blinkyDracky();", 200);
+}
 
 
 attackButton.addEventListener('click', function(){
   cleanUp();
   slowEnemyAttack();
   playerAtk();
+  dracky.classList.add("blinky");
+  // dracky.classList.remove("blinky");
   HpCheck();
 });
 protectButton.addEventListener('click', function(){

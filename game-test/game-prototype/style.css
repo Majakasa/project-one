@@ -1,14 +1,15 @@
 *{
-  width: 100%;
+  width: 99%;
   box-sizing: border-box;
 
 }
 
 .fullWrap{
-  width: 100vw;
+  width: 90%;
   height: 100%;
   background-color: white;
-  border: 2px solid black;
+  border: 5px solid black;
+  padding: 5px;
   margin: 0 auto;
 
 }
@@ -23,36 +24,61 @@
 .hpBar{
   width: 100%;
   text-align: center;
-  background-color: lightgreen;
+  background-color: #64dd17 ;
   margin: 0 auto;
 }
 .manaBar{
-
   width: 600px;
   text-align: center;
-  background-color: lightblue;
+  background-color: #00e5ff ;
   margin: 0 auto;
 }
 
-.enemy{
-  text-align: center;
-    height: auto;
-    width: auto;
-    max-width: 300px;
-    max-height: 300px;
-
+#enemy{
+    height: 320px;
+    width: 435px;
+    background-image: url("./Enemy/ezgif.com-optimize.gif");
     margin: 0 auto;
+}
+/*way to make text blink and reperposed for indicating damage*/
+/*http://stackoverflow.com/questions/20270096/how-to-make-text-blink-on-website*/
 
+.blinky {
+  animation-duration: 500ms;
+  animation-name: tgle;
+  animation-iteration-count: 5;
+}
+
+@keyframes tgle {
+  0% {
+    opacity: 0;
+  }
+
+  49.99% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+
+  99.99% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .combatLog{
-  width: 700px;
+  width: 500px;
   height: 60px;
   text-align: left;
-  border: 1px solid yellow;
+  border: 3px solid gray;
   background-color: black;
   color: white;
   margin: 0 auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
   padding: 5px;
 }
 
@@ -72,10 +98,17 @@
 #moves{
   height: 50px;
   width: 85px;
-
-  background-color: lightgray;
+  color: black;
   font-size: 16px;
 }
+
+.fireball{
+  background-color: #d50000 ;
+}
+.heal{
+  background-color: white;
+}
+
 /*.attack{
   height: 50px;
   width: 85px;
@@ -92,6 +125,7 @@
   width: 85px;
   background-color: lightgreen;
 }
+
 .slow{
   height: 50px;
   width: 85px;
