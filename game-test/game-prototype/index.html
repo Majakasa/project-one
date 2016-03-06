@@ -10,14 +10,29 @@
       <source src="./audio/09.mp3">
     </audio>
     <audio id="battleTheme" autoplay loop >
-      <source src="./audio/08.mp3">
+      <source src="./audio/08.wav">
         <!-- need to cut the fade away down in audacity -->
     </audio>
+    <audio id="heal">
+      <source src="./audio/heal.wav">
+    </audio>
+    <audio id="hit">
+      <source src="./audio/hit.wav">
+    </audio>
+    <audio id="fireBall">
+      <source src="./audio/fire.wav">
+    </audio>
+
+    <audio id="protect">
+      <source src="./audio/protect.wav">
+    </audio>
+
+
     <!-- <embed id="battleTheme" autostart="true" loop="true"  src="./audio/08.mp3"  ></embed> -->
     <div class="fullWrap">
       <!-- <img src="./Enemy/FFIViOS_Mt._Ordeals_Battle_Background" alt="test" /> -->
 
-      <div class="backgroundBar">
+      <div id="eBackgroundBar"class="backgroundBar">
         <div id="enemyHp" class="hpBar">EnemyHP</div>
       </div>
 
@@ -30,7 +45,7 @@
       </div>
 
       <div class="backgroundBar">
-        <div id="playerHp" class="hpBar">YourHP</div>
+        <div id="playerHp" class="hpBar"></div>
       </div>
 
       <div class="backgroundBar">

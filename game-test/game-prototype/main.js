@@ -11,8 +11,12 @@ var setUp = function(){
 
 setUp();
 }
-var fanfare = document.querySelector('#fanfare')
-var battleTheme = document.querySelector('#battleTheme')
+var protect = document.querySelector('#protect')
+var fireBallSound = document.querySelector('#fireBall');
+var hitSound = document.querySelector('#hit');
+var healSound = document.querySelector('#heal');
+var fanfare = document.querySelector('#fanfare');
+var battleTheme = document.querySelector('#battleTheme');
 var enemyHp = document.querySelector('#enemyHp');
 var playerHp = document.querySelector('#playerHp');
 var playerMana = document.querySelector('#playerMana');
@@ -44,17 +48,17 @@ var dracky = document.querySelector('#enemy');
 
 
 var player = {
-  Hp: 100,
-  Atk: 20,
-  Def: 12,
+  Hp: 70,
+  Atk: 15,
+  Def: 7,
   Speed: 11,
   Mana: 70,
   First: undefined,
 };
 var enemy = {
-  Hp: 120,
-  Atk: 18,
-  Def: 15,
+  Hp: 90,
+  Atk: 13,
+  Def: 10,
   Speed: 9,
   Mana: 50,
   First: undefined,
@@ -69,21 +73,20 @@ var slowPlayerAttack = function(){
 }
 
 
-
 var playerPercentDamage = function (e){
-   playerPercent = Math.floor((e / 100) * 100);
+   playerPercent = Math.floor((e / player.Hp) * 100);
   return playerPercent;
 }
 var playerPercentMana = function (e){
-   playerPercent = Math.floor((e / 70) * 100);
+   playerPercent = Math.floor((e / player.Mana) * 100);
   return playerPercent;
 }
 var enemyPercentDamage = function (e){
-    var enemyPercent = Math.floor((e / 120) * 100);
+    var enemyPercent = Math.floor((e / enemy.Hp) * 100);
  return enemyPercent;
 }
 var enemyPercentMana = function (e){
-    var enemyPercent = Math.floor((e / 50) * 100);
+    var enemyPercent = Math.floor((e / enemy.Mana) * 100);
  return enemyPercent;
 }
 
@@ -112,7 +115,7 @@ var enemyLastMove = undefined;
 var playerLastMove = undefined;
 
 var random = function(){
-  return Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+  return Math.floor(Math.random() * (12 - 1 + 1)) + 1;
 }
 
 var enemyMove = function(){
@@ -121,26 +124,26 @@ var enemyMove = function(){
     enemyHardHit();
     enemyLastMove = "HardHit";
   }
-    else if(random() >= 5){
+    else if(random() >= 10){
     enemyAtk();
     enemyLastMove = "enemyAtk";
     console.log("Atk");
     }
-    else if(random() == 4) {
+    else if(random() >= 8) {
       enemyDefUp();
       enemyLastMove = "enemyDefUp";
       console.log("Def up");
     }
-    else if(random() == 3) {
+    else if(random() >= 6) {
       enemyFireball();
       enemyLastMove = "enemyFireball";
       console.log("fireball");
     }
-    else if(random() == 2) {
+    else if(random() >= 4) {
        enemyPrepare();
        enemyLastMove = "enemyPrepare";
     }
-    else if(random() == 1) {
+    else if(random() >= 2) {
       combatLog.innerText = "Enemy is waiting";
       enemyLastMove = "waiting";
     }
@@ -172,12 +175,14 @@ var HpCheck = function(){
   if(player.Hp <= 0){
     combatLog.innerText = "\n \n You have died...";
     playerHp.innerText = 0;
+    endGame();
     battleTheme.pause();
   }
   if(enemy.Hp <= 0){
     combatLog.innerText = "\n \n You won!";
     enemyHp.innerText = 0;
     dracky.style.backgroundImage = "url()";
+    endGame();
     battleTheme.pause();
     fanfare.play();
   }
@@ -193,7 +198,7 @@ var HpCheck = function(){
     enemy.attack += 5;
     enemy.Mana +=  15;
     enemy.Speed += 5;
-    combatLog.innerText += " Enemy is enraged!";
+
   }
 
 }
@@ -212,29 +217,56 @@ var ManaBarEnemy = enemyPercentMana(playerDamage);
 
 
 
-enemyHp.style.width = enemy.Hp + "%";
+
 
 
 var enemyAtk = function(){
+  if(random() == 6){
+    player.Hp -= negativeCheck(enemy.Atk * 2 - player.Def);
+    playerHp.style.width = player.Hp + "%";
+    playerHp.innerText = "Hp " + player.Hp;
+    combatLog.innerText = " Enemy crits for " + negativeCheck(enemy.Atk * 2 - player.Def); + " damage!!!";
+    hitSound.play();
+  }else if(random() == 1){
+      combatLog.innerText = " Enemy attack missed!"
+  }
+  else{
+
   player.Hp -= negativeCheck(enemy.Atk - player.Def);
-  playerHp.style.width = playerHp.style.width - (hpBarPlayer + "%");
+  playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = " Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def); + " damage!";
+  hitSound.play();
   console.log(enemyLastMove);
+  }
 }
 var playerAtk = function(){
+  if(random() == 6){
+    enemy.Hp -= negativeCheck(player.Atk * 2 - enemy.Def);
+    enemyHp.style.width = enemy.Hp + "%";
+    enemyHp.innerText = "Hp " + enemy.Hp;
+    combatLog.innerText = " Enemy crits for " + negativeCheck(player.Atk * 2 - enemy.Def); + " damage!!!";
+    hitSound.play();
+  }
+  else if(random() == 1){
+      combatLog.innerText = " Your attack missed!"
+  }
+  else{
   enemy.Hp -= negativeCheck(player.Atk - enemy.Def);
   enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
   combatLog.innerText += "\n You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
-
+  hitSound.play();
   playerLastMove = "playerAtk";
+  }
 }
 var playerProtect = function(){
   player.Mana -= 8;
   player.Def += 100;
   playerMana.innerText = "Mana " + player.Mana;
+  playerMana.style.width = player.Mana + "%";
   combatLog.innerText += "player is protected!";
+  protect.play();
   playerLastMove = "playerProtect";
   console.log(enemyLastMove);
 }
@@ -256,11 +288,13 @@ var enemyFireball = function(){
   }
   else {
   enemy.Mana -= 15;
+  enemyMana.style.width = enemy.Mana + "%";
   enemyMana.innerText = "Mana " + enemy.Mana;
   player.Hp -= enemy.Atk;
   playerHp.style.width = player.Hp + "%";
   playerHp.innerText = "Hp " + player.Hp;
   combatLog.innerText = "Enemy cast Fireball! " + enemy.Atk + " damage!";
+  fireBallSound.play();
   console.log(enemyLastMove);
   }
 }
@@ -270,7 +304,9 @@ var playerFireball = function(){
   enemyHp.style.width = enemy.Hp + "%";
   enemyHp.innerText = "Hp " + enemy.Hp;
   playerMana.innerText = "Mana " + player.Mana;
+  playerMana.style.width = player.Mana + "%";
   combatLog.innerText += "\n Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
+  fireBallSound.play();
   playerLastMove = "playerFireball";
 }
 var enemyPrepare = function(){
@@ -288,8 +324,12 @@ var enemyHardHit = function(){
 var playerHeal = function(){
   player.Hp += 20;
   player.Mana -= 7;
-  playerMana.innerText = "Mana " + player.Mana;
+
+  playerHp.style.width = player.Hp + "%";
+  playerMana.style.width = player.Mana + "%";
   combatLog.innerText += "\n You recover 20Hp!"
+  playerMana.innerText = "Mana " + player.Mana;
+  healSound.play();
   playerLastMove = "playerHeal";
 }
 var playerSlow = function(){
@@ -363,7 +403,14 @@ attackUpButton.addEventListener('click', function(){
   HpCheck();
 });
 
-
+var endGame = function(){
+  spellButton.disabled = true;
+  attackButton.disabled = true;
+  healButton.disabled = true;
+  protectButton.disabled = true;
+  slowButton .disabled = true;
+  attackUpButton .disabled = true;
+}
 
 
 
