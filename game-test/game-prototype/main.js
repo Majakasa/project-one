@@ -129,7 +129,7 @@ var random = function(){
 var enemyMove = function(){
   random();
 var randomNum = random();
-console.log(randomNum)
+console.log("random" + randomNum )
   if(enemyLastMove === "enemyPrepare"){
     enemyHardHit();
     enemyLastMove = "HardHit";
@@ -164,8 +164,9 @@ console.log(randomNum)
     }
 
   HpCheck();
-  protectCheck();
   dracky.classList.remove("blinky");
+
+
   console.log("enemy moved");
 }
 
@@ -179,7 +180,7 @@ var checkProtect = function(){
   }
 }
 var protectCheck = function(){
-  timer = window.setTimeout(checkProtect, 2100);
+  timer = window.setTimeout(checkProtect, 3000);
 }
 
 var HpCheck = function(){
@@ -240,6 +241,7 @@ var enemyAtk = function(){
   hpDispay.innerText = "Hp " + player.Hp;
   combatLog.innerText += "\n Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def); + " damage!";
   hitSound.play();
+  console.log(player.Def);
   console.log(enemyLastMove);
   }
 }
@@ -262,6 +264,7 @@ var playerAtk = function(){
   combatLog.innerText = " You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
   hitSound.play();
   dracky.classList.add("blinky");
+  console.log(player.Def);
   playerLastMove = "playerAtk";
   }
   HpCheck();
@@ -273,14 +276,15 @@ var playerProtect = function(){
   playerMana.style.width = player.Mana + "%";
   combatLog.innerText = "Player is protected!";
   protect.play();
-
   playerLastMove = "playerProtect";
+  console.log(player.Def);
   console.log(enemyLastMove);
 }
 var enemyDefUp = function(){
   enemy.Def +=  3;
   combatLog.innerText += "\n Enemy Def rose by 3!";
   boost.play();
+  console.log(player.Def);
   console.log(enemyLastMove);
 }
 var playerAtkUp = function(){
@@ -288,6 +292,7 @@ var playerAtkUp = function(){
   combatLog.innerText = "Player Atk rose by 3!";
   boost.play();
   playerLastMove = "playerAtkUp";
+  console.log(player.Def);
   console.log(enemyLastMove);
 
 }
@@ -304,6 +309,7 @@ var enemyFireball = function(){
   hpDispay.innerText = "Hp " + player.Hp;
   combatLog.innerText += "\n Enemy cast Fireball! " + enemy.Atk + " damage!";
   fireBallSound.play();
+  console.log(player.Def);
   console.log(enemyLastMove);
   }
 }
@@ -317,11 +323,13 @@ var playerFireball = function(){
   combatLog.innerText += " Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
   fireBallSound.play();
   dracky.classList.add("blinky");
+  console.log(player.Def);
   HpCheck();
   playerLastMove = " playerFireball";
 }
 var enemyPrepare = function(){
   combatLog.innerText += "\n Enemy is preparing an attack!";
+  console.log(player.Def);
   console.log(enemyLastMove);
 }
 var enemyHardHit = function(){
@@ -344,6 +352,7 @@ var playerHeal = function(){
   manaDisplay.innerText = "Mana " + player.Mana;
   hpDispay.innerText = "Hp " + player.Hp;
   healSound.play();
+  console.log(player.Def);
   HpCheck();
   playerLastMove = "playerHeal";
 }
@@ -351,6 +360,7 @@ var playerSlow = function(){
   enemy.Speed -= 3;
   combatLog.innerText += "\n Enemy Speed lowered by 3!";
   playerLastMove = "playerSlow";
+  console.log(player.Def);
   console.log(enemyLastMove);
 }
 
@@ -379,7 +389,7 @@ protectButton.addEventListener('click', function(){
   slowEnemyAttack();
   playerProtect();
   HpCheck();
-
+  protectCheck();
   }
 });
 slowButton.addEventListener('click', function(){
