@@ -1,10 +1,10 @@
 window.onload = function() {
 
 var setUp = function(){
-  enemyHp.innerText = "HP " + enemy.Hp;
-  playerHp.innerText = "HP " + player.Hp;
-  playerMana.innerText = "HP " + player.Mana;
-  enemyMana.innerText = "HP " + enemy.Mana;
+  enemyHpNum.innerText = "HP " + enemy.Hp;
+  hpDispay.innerText = "HP " + player.Hp;
+  manaDisplay.innerText = "HP " + player.Mana;
+  enemyManaNum.innerText = "HP " + enemy.Mana;
   combatLog.innerText = "An Enemy has appeared! \n Choose an action!"
   console.log("setup complete");
 }
@@ -19,6 +19,12 @@ var hitSound = document.querySelector('#hit');
 var healSound = document.querySelector('#heal');
 var fanfare = document.querySelector('#fanfare');
 var battleTheme = document.querySelector('#battleTheme');
+
+var enemyHpNum = document.querySelector('.enemyHpNum');
+var enemyManaNum = document.querySelector('.enemyManaNum');
+var hpDispay = document.querySelector('.hp');
+var manaDisplay = document.querySelector('.mana');
+
 var enemyHp = document.querySelector('#enemyHp');
 var playerHp = document.querySelector('#playerHp');
 var playerMana = document.querySelector('#playerMana');
@@ -178,13 +184,13 @@ var protectCheck = function(){
 var HpCheck = function(){
   if(player.Hp <= 0){
     combatLog.innerText = "\n \n You have died...";
-    playerHp.innerText = 0;
+    hpDispay.innerText = 0;
     endGame();
     battleTheme.pause();
   }
   if(enemy.Hp <= 0){
     combatLog.innerText = "\n \n You won!";
-    enemyHp.innerText = 0;
+    enemyHpNum.innerText = 0;
     dracky.style.backgroundImage = "url()";
     endGame();
     battleTheme.pause();
@@ -192,11 +198,11 @@ var HpCheck = function(){
   }
   if(player.Hp > 100){
     player.Hp = 100;
-    playerHp.innerText = "Hp " + player.Hp;
+    hpDispay.innerText = "Hp " + player.Hp;
   }
   if(enemy.Hp > 120){
     enemy.Hp = 120;
-    enemyHp.innerText = "Hp " + enemy.Hp;
+    enemyHpNum.innerText = "Hp " + enemy.Hp;
   }
   if(enemy.Hp <= 60){
     enemy.attack += 5;
@@ -223,7 +229,7 @@ var enemyAtk = function(){
   if(random() == 6){
     player.Hp -= negativeCheck(enemy.Atk * 2 - player.Def);
     playerHp.style.width = player.Hp + "%";
-    playerHp.innerText = "Hp " + player.Hp;
+    hpDispay.innerText = "Hp " + player.Hp;
     combatLog.innerText += "\n Enemy crits for " + negativeCheck(enemy.Atk * 2 - player.Def); + " damage!!!";
     hardHitSound.play();
   }else if(random() == 1){
@@ -233,7 +239,7 @@ var enemyAtk = function(){
 
   player.Hp -= negativeCheck(enemy.Atk - player.Def);
   playerHp.style.width = player.Hp + "%";
-  playerHp.innerText = "Hp " + player.Hp;
+  hpDispay.innerText = "Hp " + player.Hp;
   combatLog.innerText += "\n Enemy Attacks for " + negativeCheck(enemy.Atk - player.Def); + " damage!";
   hitSound.play();
   console.log(enemyLastMove);
@@ -243,7 +249,7 @@ var playerAtk = function(){
   if(random() == 6){
     enemy.Hp -= negativeCheck(player.Atk * 2 - enemy.Def);
     enemyHp.style.width = enemy.Hp + "%";
-    enemyHp.innerText = "Hp " + enemy.Hp;
+    enemyHpNum.innerText = "Hp " + enemy.Hp;
     combatLog.innerText = " Critical hit for " + negativeCheck(player.Atk * 2 - enemy.Def); + " damage!!!";
     hardHitSound.play();
     dracky.classList.add("blinky");
@@ -254,7 +260,7 @@ var playerAtk = function(){
   else{
   enemy.Hp -= negativeCheck(player.Atk - enemy.Def);
   enemyHp.style.width = enemy.Hp + "%";
-  enemyHp.innerText = "Hp " + enemy.Hp;
+  enemyHpNum.innerText = "Hp " + enemy.Hp;
   combatLog.innerText = " You Attack for " + negativeCheck(player.Atk - enemy.Def) + " damage!";
   hitSound.play();
   dracky.classList.add("blinky");
@@ -265,10 +271,11 @@ var playerAtk = function(){
 var playerProtect = function(){
   player.Mana -= 8;
   player.Def += 100;
-  playerMana.innerText = "Mana " + player.Mana;
+  manaDisplay.innerText = "Mana " + player.Mana;
   playerMana.style.width = player.Mana + "%";
   combatLog.innerText = "Player is protected!";
   protect.play();
+
   playerLastMove = "playerProtect";
   console.log(enemyLastMove);
 }
@@ -293,10 +300,10 @@ var enemyFireball = function(){
   else {
   enemy.Mana -= 15;
   enemyMana.style.width = enemy.Mana + "%";
-  enemyMana.innerText = "Mana " + enemy.Mana;
+  enemyManaNum.innerText = "Mana " + enemy.Mana;
   player.Hp -= enemy.Atk;
   playerHp.style.width = player.Hp + "%";
-  playerHp.innerText = "Hp " + player.Hp;
+  hpDispay.innerText = "Hp " + player.Hp;
   combatLog.innerText += "\n Enemy cast Fireball! " + enemy.Atk + " damage!";
   fireBallSound.play();
   console.log(enemyLastMove);
@@ -306,8 +313,8 @@ var playerFireball = function(){
   player.Mana -= 15;
   enemy.Hp -= player.Atk;
   enemyHp.style.width = enemy.Hp + "%";
-  enemyHp.innerText = "Hp " + enemy.Hp;
-  playerMana.innerText = "Mana " + player.Mana;
+  enemyHpNum.innerText = "Hp " + enemy.Hp;
+  manaDisplay.innerText = "Mana " + player.Mana;
   playerMana.style.width = player.Mana + "%";
   combatLog.innerText += " Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
   fireBallSound.play();
@@ -322,9 +329,10 @@ var enemyPrepare = function(){
 var enemyHardHit = function(){
   player.Hp -= negativeCheck((enemy.Atk * 3) - player.Def)
   playerHp.style.width = player.Hp + "%";
-  playerHp.innerText = "Hp " + player.Hp;
+  hpDispay.innerText = "Hp " + player.Hp;
   combatLog.innerText += "\n Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
   hardHitSound.play();
+  console.log(player.Def );
   enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
 }
@@ -334,8 +342,8 @@ var playerHeal = function(){
   playerHp.style.width = player.Hp + "%";
   playerMana.style.width = player.Mana + "%";
   combatLog.innerText += " You recover 20Hp!"
-  playerMana.innerText = "Mana " + player.Mana;
-  playerHp.innerText = "Hp " + player.Hp;
+  manaDisplay.innerText = "Mana " + player.Mana;
+  hpDispay.innerText = "Hp " + player.Hp;
   healSound.play();
   HpCheck();
   playerLastMove = "playerHeal";
@@ -387,7 +395,7 @@ healButton.addEventListener('click', function(){
     combatLog.innerText = "Not enough mana";
   }
   else {
-  playerMana.innerText = "Mana " + player.Mana;
+  manaDisplay.innerText = "Mana " + player.Mana;
   playerHeal();
   slowEnemyAttack();
   HpCheck();
