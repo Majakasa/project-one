@@ -164,6 +164,7 @@ console.log(randomNum)
     }
 
   HpCheck();
+  protectCheck();
   dracky.classList.remove("blinky");
   console.log("enemy moved");
 }
@@ -196,23 +197,20 @@ var HpCheck = function(){
     battleTheme.pause();
     fanfare.play();
   }
-  if(player.Hp > 100){
-    player.Hp = 100;
+  if(player.Hp > 70){
+    player.Hp = 70;
     hpDispay.innerText = "Hp " + player.Hp;
   }
-  if(enemy.Hp > 120){
-    enemy.Hp = 120;
+  if(enemy.Hp > 100){
+    enemy.Hp = 100;
     enemyHpNum.innerText = "Hp " + enemy.Hp;
   }
-  if(enemy.Hp <= 60){
+  if(enemy.Hp <= 40){
     enemy.attack += 5;
     enemy.Mana +=  15;
     enemy.Speed += 5;
-
   }
-
 }
-
 var negativeCheck = function(e){
   if(e < 0){
     e = 1;
@@ -332,6 +330,7 @@ var enemyHardHit = function(){
   hpDispay.innerText = "Hp " + player.Hp;
   combatLog.innerText += "\n Enemy deals a crushing blow for " + negativeCheck((enemy.Atk * 3) - player.Def)  + " damage!";
   hardHitSound.play();
+
   console.log(player.Def );
   enemyLastMove = "enemyHardHit";
   console.log(enemyLastMove);
@@ -380,7 +379,7 @@ protectButton.addEventListener('click', function(){
   slowEnemyAttack();
   playerProtect();
   HpCheck();
-  protectCheck();
+
   }
 });
 slowButton.addEventListener('click', function(){
