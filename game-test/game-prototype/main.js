@@ -58,7 +58,7 @@ var player = {
   First: undefined,
 };
 var enemy = {
-  Hp: 120,
+  Hp: 100,
   Atk: 13,
   Def: 10,
   Speed: 9,
@@ -68,7 +68,7 @@ var enemy = {
 var playerAtkAfter;
 var timer;
 function slowEnemyAttack() {
-  timer = window.setTimeout(enemyMove, 2000);
+  timer = window.setTimeout(enemyMove, 2500);
 }
 var slowPlayerAttack = function(){
   timer = window.setTimeout(playerAtk, 2000);
@@ -121,32 +121,34 @@ var random = function(){
 }
 
 var enemyMove = function(){
-
+  random();
+var randomNum = random();
+console.log(randomNum)
   if(enemyLastMove === "enemyPrepare"){
     enemyHardHit();
     enemyLastMove = "HardHit";
   }
-    else if(random() >= 10){
+    else if(randomNum >= 10){
     enemyAtk();
     enemyLastMove = "enemyAtk";
     console.log("Atk");
     }
-    else if(random() >= 8) {
+    else if(randomNum == 9) {
       enemyDefUp();
       enemyLastMove = "enemyDefUp";
       console.log("Def up");
     }
-    else if(random() >= 6) {
+    else if(randomNum >= 7) {
       enemyFireball();
       enemyLastMove = "enemyFireball";
       console.log("fireball");
     }
-    else if(random() >= 4) {
+    else if(randomNum >= 4) {
        enemyPrepare();
        enemyLastMove = "enemyPrepare";
     }
-    else if(random() >= 2) {
-      combatLog.innerText = "Enemy is waiting";
+    else if(randomNum == 3) {
+      combatLog.innerText = "Enemy is observing you carefully...";
       enemyLastMove = "waiting";
     }
     else{
@@ -309,6 +311,7 @@ var playerFireball = function(){
   playerMana.style.width = player.Mana + "%";
   combatLog.innerText += " Player cast Fireball! " + negativeCheck(player.Atk); + " damage!";
   fireBallSound.play();
+  dracky.classList.add("blinky");
   HpCheck();
   playerLastMove = " playerFireball";
 }
@@ -332,7 +335,9 @@ var playerHeal = function(){
   playerMana.style.width = player.Mana + "%";
   combatLog.innerText += " You recover 20Hp!"
   playerMana.innerText = "Mana " + player.Mana;
+  playerHp.innerText = "Hp " + player.Hp;
   healSound.play();
+  HpCheck();
   playerLastMove = "playerHeal";
 }
 var playerSlow = function(){
@@ -355,7 +360,6 @@ attackButton.addEventListener('click', function(){
   cleanUp();
   playerAtk();
   slowEnemyAttack();
-
   // dracky.classList.remove("blinky");
   HpCheck();
 });

@@ -18,6 +18,7 @@
   border: 3px solid black;
   width: 600px;
   display: flex;
+  align-content: flex-start;
   justify-content: flex-start;
   background-color: red;
   margin: 0 auto;
@@ -35,6 +36,7 @@
 .hpBar{
   width: 100% ;
   display: flex;
+  al
   text-align: center;;
   background-color: #64dd17 ;
   margin: 0 auto;
@@ -126,6 +128,8 @@
   height: 50px;
   width: 85px;
   color: black;
+  background-color: white;
+  border-radius: 5px;
   font-size: 9px;
   font-family: 'Press Start 2P', cursive;
   box-shadow:
@@ -135,15 +139,10 @@
   overflow: hidden;
 }
 #moves:hover {
-    outline: #52EBFF solid 5px;
+    outline: #FFFF78 solid 3px;
 
-}
-.fireball{
-  background-color: #d50000 ;
-}
-.heal{
-  background-color: white;
-}
+
+
 
 /*.attack{
   height: 50px;
